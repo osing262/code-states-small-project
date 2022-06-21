@@ -1,29 +1,29 @@
-package com.rhyno.startsecurity.user;
+package com.example.security.member.service;
 
+import com.example.security.member.entity.Member;
+import com.example.security.member.entity.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
-public class UserService {
-    private final UserRepository userRepository;
+public class MemberService {
+    private final MemberRepository memberRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public User getUser(long id) {
-        return userRepository.findById(id)
+    public Member getUser(long id) {
+        return memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found user with id =" + id));
     }
 
-    public Optional<User> getUser(String email) {
-        return userRepository.findByEmail(email);
+    public Optional<Member> getUser(String email) {
+        return memberRepository.findByEmail(email);
     }
 
     @Transactional
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public Member createUser(Member member) {
+        return memberRepository.save(member);
     }
 }

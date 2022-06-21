@@ -1,7 +1,8 @@
-package com.rhyno.startsecurity.role;
+package com.example.security.role.entity;
 
-import com.rhyno.startsecurity.user.User;
-import com.rhyno.startsecurity.user.UserService;
+import com.example.security.member.entity.Member;
+import com.example.security.member.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,27 +13,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@RequiredArgsConstructor
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-    private final UserService userService;
-
-    public CustomUserDetailsService(UserService userService) {
-        this.userService = userService;
-    }
+    private final MemberService memberService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.getUser(username)
+        Member member = memberService.getUser(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User is not found. email=" + username));
 
-        user.setAuthorities(
+        member.setAuthorities(
                 Stream.concat(
-                        getRoles(user.getRoles()).stream(),
-                        getPrivileges(user.getRoles()).stream()
+                        getRoles(member.getRoles()).stream(),
+                        getPrivileges(member.getRoles()).stream()
                 ).collect(Collectors.toList())
         );
 
-        return user;
+        return member;
     }
 
     private List<SimpleGrantedAuthority> getRoles(List<Role> roles) {

@@ -1,4 +1,4 @@
-package com.rhyno.startsecurity.role;
+package com.example.security.role.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

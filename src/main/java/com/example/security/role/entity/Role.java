@@ -1,4 +1,4 @@
-package com.rhyno.startsecurity.role;
+package com.example.security.role.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -26,8 +26,8 @@ public class Role {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "role_privilege",
-            joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id")
+            joinColumns = @JoinColumn(name = "rid", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "pid", referencedColumnName = "id")
     )
     private List<Privilege> privileges;
 }
